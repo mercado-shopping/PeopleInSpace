@@ -1,1 +1,1 @@
-web: gradle :backend:vertxRun
+web: ./gradlew :backend:vertxRun
