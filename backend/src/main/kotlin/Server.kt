@@ -11,7 +11,7 @@ import io.vertx.core.Vertx
 class HelloWorldServer: AbstractVerticle() {
     private val port = System.getenv("PORT").toInt()
     val server: Server = ServerBuilder
-        .forPort(port)
+        .forPort(config().getInteger("http.port", 8080))
         .addService(GreeterService())
         .build()
 
