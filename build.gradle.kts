@@ -47,5 +47,6 @@ tasks.named<Wrapper>("wrapper") {
 
 // Heroku
 tasks.register("stage") {
-    dependsOn("build", ":backend:vertxRun")
+    dependsOn("build", "clean")
+//    build.mustRunAfter(clean)
 }
