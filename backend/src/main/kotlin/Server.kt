@@ -9,7 +9,7 @@ import io.vertx.core.Context
 import io.vertx.core.Vertx
 
 class HelloWorldServer: AbstractVerticle() {
-    private val port: Int = 12345
+    private val port = 80
     val server: Server = ServerBuilder
         .forPort(port)
         .addService(GreeterService())
