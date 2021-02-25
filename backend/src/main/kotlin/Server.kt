@@ -9,15 +9,19 @@ import io.vertx.core.Context
 import io.vertx.core.Vertx
 
 class HelloWorldServer: AbstractVerticle() {
-    private val port = config().getInteger("http.port", 8080)
-    val server: Server = ServerBuilder
-        .forPort(port)
-        .addService(GreeterService())
-        .build()
+    val server by lazy {
+        val port = config().getInteger("http.port", 8080)
+        val server: Server = ServerBuilder
+            .forPort(port)
+            .addService(GreeterService())
+            .build()
+
+        server
+    }
 
     override fun start() {
         server.start()
-        println("Server started, listening on $port")
+        println("Server started, listening on ${server.port}")
         Runtime.getRuntime().addShutdownHook(
             Thread {
                 println("*** shutting down gRPC server since JVM is shutting down")
