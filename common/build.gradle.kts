@@ -5,7 +5,6 @@ plugins {
     id("kotlinx-serialization")
     id("com.android.library")
     id("org.jetbrains.kotlin.native.cocoapods")
-    id("com.squareup.sqldelight")
     id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
 }
 
@@ -13,11 +12,11 @@ plugins {
 version = "1.0"
 
 android {
-    compileSdkVersion(AndroidSdk.compile)
+    compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
+        minSdkVersion(28)
+        targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
 
@@ -141,12 +140,6 @@ kotlin {
     }
 }
 
-sqldelight {
-    database("PeopleInSpaceDatabase") {
-        packageName = "com.surrus.peopleinspace.db"
-        sourceFolders = listOf("sqldelight")
-    }
-}
 
 multiplatformSwiftPackage {
     packageName("PeopleInSpace")

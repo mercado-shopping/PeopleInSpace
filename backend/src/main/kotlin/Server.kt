@@ -1,55 +1,49 @@
-import com.surrus.common.di.initKoin
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.serialization.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import com.surrus.common.remote.PeopleInSpaceApi
-import com.surrus.common.remote.AstroResult
-import com.surrus.common.remote.Assignment
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.features.ContentNegotiation
-import io.ktor.http.ContentType
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
+import io.grpc.examples.helloworld.HelloReply
+import io.grpc.examples.helloworld.HelloRequest
+
+import io.grpc.Server
+import io.grpc.ServerBuilder
+import io.grpc.examples.helloworld.GreeterGrpcKt
+import io.vertx.core.AbstractVerticle
+
+class HelloWorldServer(private val port: Int) : AbstractVerticle() {
+    val server: Server = ServerBuilder
+        .forPort(port)
+        .addService(GreeterService())
+        .build()
+
+    override fun start() {
+        server.start()
+        println("Server started, listening on $port")
+        Runtime.getRuntime().addShutdownHook(
+            Thread {
+                println("*** shutting down gRPC server since JVM is shutting down")
+                this@HelloWorldServer.stop()
+                println("*** server shut down")
+            }
+        )
+    }
+
+    private fun stop() {
+        server.shutdown()
+    }
+
+    fun blockUntilShutdown() {
+        server.awaitTermination()
+    }
+
+    class GreeterService : GreeterGrpcKt.GreeterCoroutineImplBase() {
+        override suspend fun sayHello(request: HelloRequest) = HelloReply
+            .newBuilder()
+            .setMessage("Hello ${request.name}")
+            .build()
+    }
+}
 
 
 fun main() {
-    val koin = initKoin(enableNetworkLogs = true).koin
-    val peopleInSpaceApi = koin.get<PeopleInSpaceApi>()
-
-    embeddedServer(Netty, 9090) {
-        install(ContentNegotiation) {
-            json()
-        }
-
-        routing {
-
-            get("/") {
-                call.respondText(
-                    this::class.java.classLoader.getResource("index.html")!!.readText(),
-                    ContentType.Text.Html
-                )
-            }
-
-            static("/") {
-                resources("")
-            }
-
-            get("/astros.json") {
-                val result = peopleInSpaceApi.fetchPeople()
-                call.respond(result)
-            }
-
-            get("/astros_local.json") {
-                val result = AstroResult("success", 3,
-                    listOf(Assignment("ISS", "Chris Cassidy"),
-                        Assignment("ISS", "Anatoly Ivanishin"),
-                        Assignment("ISS", "Ivan Vagner")))
-                call.respond(result)
-            }
-
-        }
-    }.start(wait = true)
+    val port = System.getenv("PORT")?.toInt() ?: 50051
+    val server = HelloWorldServer(port)
+    server.start()
+    server.blockUntilShutdown()
 }
