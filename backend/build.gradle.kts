@@ -123,8 +123,3 @@ vertx {
 //    from(helloWorldServerStartScripts)
 //    fileMode = 0755
 //}
-
-// Heroku
-tasks.register("stage") {
-    dependsOn("build", "vertxRun")
-}
