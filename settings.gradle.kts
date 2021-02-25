@@ -11,7 +11,10 @@ pluginManagement {
 rootProject.name = "PeopleInSpace"
 
 enableFeaturePreview("GRADLE_METADATA")
-
-include(":app", ":common", ":compose-desktop")
+if (INCLUDE_APP == "true") {
+    include(":app")
+    include(":compose-desktop")
+}
+include(":common")
 include(":web")
 include(":backend")
