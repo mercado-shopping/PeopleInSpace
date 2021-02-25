@@ -11,14 +11,14 @@ class BackendApplication {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            HelloWorldServer(12345).start()
+            HelloWorldServer().start()
         }
     }
 }
 
 class HelloVerticle : AbstractVerticle() {
     override fun start() {
-        HelloWorldServer(12345).start()
+        HelloWorldServer().start()
     }
 }
 //fun main() {
