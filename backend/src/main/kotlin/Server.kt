@@ -24,7 +24,7 @@ class HelloWorldServer(private val port: Int) : AbstractVerticle() {
         )
     }
 
-    private fun stop() {
+    override fun stop() {
         server.shutdown()
     }
 
