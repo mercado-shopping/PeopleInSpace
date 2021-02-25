@@ -9,7 +9,7 @@ import io.vertx.core.Context
 import io.vertx.core.Vertx
 
 class HelloWorldServer: AbstractVerticle() {
-    private val port = if (System.getenv("PORT").isNullOrEmpty()) config().getInteger("http.port", 8080) else Integer.parseInt(System.getenv("PORT"))
+    private val port = System.getenv("PORT").toInt()
     val server: Server = ServerBuilder
         .forPort(port)
         .addService(GreeterService())
