@@ -5,8 +5,11 @@ import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.examples.helloworld.GreeterGrpcKt
 import io.vertx.core.AbstractVerticle
+import io.vertx.core.Context
+import io.vertx.core.Vertx
 
-class HelloWorldServer(private val port: Int) : AbstractVerticle() {
+class HelloWorldServer: AbstractVerticle() {
+    private val port: Int = 12345
     val server: Server = ServerBuilder
         .forPort(port)
         .addService(GreeterService())
@@ -43,7 +46,7 @@ class HelloWorldServer(private val port: Int) : AbstractVerticle() {
 
 fun main() {
     val port = System.getenv("PORT")?.toInt() ?: 50051
-    val server = HelloWorldServer(port)
+    val server = HelloWorldServer()
     server.start()
     server.blockUntilShutdown()
 }
