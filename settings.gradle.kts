@@ -8,13 +8,13 @@ pluginManagement {
 }
 
 
-rootProject.name = "PeopleInSpace"
+rootProject.name = "mercado"
 
 enableFeaturePreview("GRADLE_METADATA")
-if (INCLUDE_APP == "true") {
-    include(":app")
-    include(":compose-desktop")
-}
+//if (INCLUDE_APP == "true") {
+//    include(":app")
+//    include(":compose-desktop")
+//}
 include(":common")
-include(":web")
+//include(":web")
 include(":backend")
