@@ -37,14 +37,10 @@ tasks {
     withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
-//    wrapper {
-//        gradleVersion = "6.0.1"
-//        distributionType = Wrapper.DistributionType.ALL
-//    }
 }
 
 
-task<Wrapper>("wrapper") {
+tasks.named<Wrapper>("wrapper") {
     gradleVersion = "6.8.2"
     distributionType = Wrapper.DistributionType.ALL
 }
