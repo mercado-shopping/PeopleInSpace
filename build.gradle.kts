@@ -37,10 +37,6 @@ tasks {
     withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
-//    wrapper {
-//        gradleVersion = "6.0.1"
-//        distributionType = Wrapper.DistributionType.ALL
-//    }
 }
 
 
