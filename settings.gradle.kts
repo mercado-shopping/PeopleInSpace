@@ -9,7 +9,7 @@ pluginManagement {
 
 
 rootProject.name = "mercado"
-
+//
 enableFeaturePreview("GRADLE_METADATA")
 //if (INCLUDE_APP == "true") {
 //    include(":app")
